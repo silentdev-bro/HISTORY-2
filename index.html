@@ -10,12 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Vintage Scholar -->
-    <!-- Application Structure Plan: The SPA is designed as a thematic exploration hub. The flow is: 1. Bio & Timeline, 2. Science & Empire Context, 3. Societal Impact, 4. His Vision, 5. A new, static blog-style section on Science, Technology & Society (STS) connections, 6. AI Chat with Ross's Persona, and 7. An expanded Bookshelf with AI summaries. This structure allows users to either follow a narrative or jump directly to sections of interest. The STS section is now a curated piece for a more direct educational impact. -->
+    <!-- Application Structure Plan: The SPA is a thematic exploration hub. The flow is: 1. Bio with Photo & Timeline, 2. Science & Empire Context, 3. Societal Impact, 4. His Vision, 5. A revised, point-based STS analysis, 6. AI Chat with Ross's Persona, and 7. An expanded Bookshelf with AI summaries. The STS section is now a more direct, scannable academic summary. -->
     <!-- Visualization & Content Choices: 
-    - Report Info: Ross's STS connections -> Goal: Analyze/Inform -> Viz/Presentation: Static Blog Post -> Interaction: Reading -> Justification: Provides a focused, expert analysis on key academic concepts without requiring user action or potential API failures, ensuring core educational content is always available.
-    - All other interactions (Timeline, Chart, AI Chat, AI Summaries) remain as previously designed to encourage exploration in other areas of the application.
+    - Report Info: Ronald Ross's appearance -> Goal: Humanize/Inform -> Viz/Presentation: Portrait Image (user-provided) -> Justification: Adds a personal and authentic element to the biographical section.
+    - Report Info: Ross's STS connections -> Goal: Analyze/Inform -> Viz/Presentation: Point-based grid layout -> Interaction: Reading -> Justification: Presents complex academic frameworks in a concise, digestible format as requested, ensuring the core educational content is clear and scannable.
     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -116,7 +115,7 @@
                         <a href="#context" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Science & Empire</a>
                         <a href="#impact" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Societal Impact</a>
                         <a href="#vision" class="nav-link px-3 py-2 rounded-md text-sm font-medium">His Vision</a>
-                        <a href="#sts" class="nav-link px-3 py-2 rounded-md text-sm font-medium">STS Lens</a>
+                        <a href="#sts" class="nav-link px-3 py-2 rounded-md text-sm font-medium">STS Frameworks</a>
                         <a href="#ask" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Ask Ross</a>
                         <a href="#bookshelf" class="nav-link px-3 py-2 rounded-md text-sm font-medium">The Bookshelf</a>
                     </div>
@@ -127,7 +126,7 @@
                         <option value="#context">Science & Empire</option>
                         <option value="#impact">Societal Impact</option>
                         <option value="#vision">His Vision</option>
-                        <option value="#sts">STS Lens</option>
+                        <option value="#sts">STS Frameworks</option>
                         <option value="#ask">Ask Ross</option>
                         <option value="#bookshelf">The Bookshelf</option>
                     </select>
@@ -141,7 +140,7 @@
             <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">A Pioneer of Modern Medicine</h2>
             <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Sir Ronald Ross was a British polymath—doctor, mathematician, writer, and artist—whose relentless research fundamentally changed our understanding of infectious disease. His Nobel Prize-winning discovery of the malaria parasite's life cycle in mosquitoes paved the way for effective control strategies, saving countless lives.</p>
             
-            <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="md:w-2/5">
                     <div class="relative pl-10 border-l-2 border-dashed border-[#E6D9CF]">
                         <div id="timeline-item-1895" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1895')">
@@ -162,7 +161,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-md">
+                <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-md text-center md:text-left">
+                    <img src="ronald-image.jpg" alt="Portrait of Sir Ronald Ross" class="w-32 h-32 rounded-full mx-auto md:mx-0 md:float-left md:mr-6 mb-4 object-cover ring-4 ring-gray-200">
                     <h3 id="timeline-title" class="text-xl font-bold mb-4 text-[#B98B73]">The Discovery of a Lifetime</h3>
                     <p id="timeline-text" class="text-gray-700">Click on a date in the timeline to explore the key moments of Ross's groundbreaking research. Each step, filled with challenges and breakthroughs, illustrates the rigorous process of scientific discovery and its profound human consequences.</p>
                 </div>
@@ -214,26 +214,33 @@
             </div>
         </section>
 
-        <!-- REVISED STS SECTION - NOW A BLOG -->
         <section id="sts" class="mb-20 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">A Researcher's Reflections: Ross Through an STS Lens</h2>
-            <p class="text-center max-w-3xl mx-auto mb-12 text-lg">The field of Science, Technology, and Society (STS) teaches us that scientific facts are not discovered in a social vacuum. They are products of their time, shaped by politics, culture, and power. Sir Ronald Ross's Nobel-winning work on malaria is a perfect case study, revealing the intricate web connecting a laboratory discovery to the machinery of an empire and the lives of millions.</p>
-            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md space-y-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-3 text-[#B98B73]">Thomas Kuhn and Paradigm Shifts</h3>
-                    <p>Before Ross, the dominant paradigm for explaining diseases like malaria was the <span class="font-semibold">"miasma theory"</span>—the idea that disease was caused by "bad air" from rotting organic matter. Ross's work was a crucial part of a revolutionary <span class="font-semibold">paradigm shift</span> toward germ theory and vector-borne transmission. His discovery didn't just add a new fact; it shattered the old framework. The solution was no longer to avoid foul smells but to wage war on a specific technological target: the Anopheles mosquito. This fundamentally new way of seeing the problem redefined the entire field of public health and tropical medicine.</p>
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">How to Frame Ronald Ross in STS Terms</h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Science, Technology, and Society (STS) provides powerful frameworks to understand that scientific breakthroughs are never isolated events. They are deeply embedded in the culture, politics, and technology of their time. Here’s how we can analyze Ross’s work through an STS lens.</p>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">1. Whig History vs. Real History</h3>
+                    <p class="text-sm">Ross is often seen as a lone “hero scientist.” STS warns this is a <strong class="font-semibold">Whig history</strong> trap—a simplified story of progress. The real history includes chance, the vital work of his Indian assistants, and the wider network that made his discovery possible.</p>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-bold mb-3 text-[#B98B73]">The Social Construction of Technology (SCOT)</h3>
-                    <p>SCOT argues that technology is shaped by the needs and values of "relevant social groups." For the British Empire, malaria was not primarily a humanitarian crisis but an administrative and military problem. It incapacitated soldiers and officials, hindering colonial governance. Thus, the "technology" of mosquito control was socially constructed to serve a specific group's primary interest: maintaining the stability and efficiency of the colonial state. The meaning of Ross's discovery was immediately framed by its utility to the Empire, demonstrating that the value and application of a scientific breakthrough are determined by the society that wields it.</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">2. Kuhn's Paradigm Shift</h3>
+                    <p class="text-sm">Before Ross, the dominant paradigm was the <strong class="font-semibold">“miasma theory”</strong> (disease from “bad air”). His mosquito-malaria link was a revolutionary <strong class="font-semibold">paradigm shift</strong>. As Thomas Kuhn described, anomalies (evidence against miasma) led to a crisis, which was resolved by a new paradigm: vector-borne disease theory.</p>
                 </div>
-                 <div>
-                    <h3 class="text-2xl font-bold mb-3 text-[#B98B73]">Actor-Network Theory (ANT)</h3>
-                    <p>ANT sees science as the process of building a powerful network of both human and non-human <span class="font-semibold">"actors."</span> Ross was not a lone genius. His success depended on assembling a network that could hold itself together. This network included: <span class="font-semibold">human actors</span> like his assistants, his patients, and his superiors in the Indian Medical Service; and crucial <span class="font-semibold">non-human actors</span> like the microscope that made observation possible, the malaria plasmodium itself, and the Anopheles mosquitoes which had to be captured, bred, and observed. Ross's breakthrough was in successfully aligning all these actors to create a stable, undeniable fact: the mosquito transmits the parasite.</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">3. Boundary Objects & Trading Zones</h3>
+                    <p class="text-sm">The mosquito itself was a <strong class="font-semibold">boundary object</strong>. To Ross, it was a scientific specimen. To his assistants, a research tool. To Indian locals, a daily pest. These groups worked together in a <strong class="font-semibold">"trading zone"</strong> (the lab, the hospital), exchanging knowledge despite different perspectives.</p>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-bold mb-3 text-[#B98B73]">The Political Economy of Science</h3>
-                    <p>This perspective examines how funding and political interests direct scientific inquiry. Ross's research is a textbook example. It was not "pure science" pursued for its own sake. It was funded and sanctioned by the British government because malaria had a massive <span class="font-semibold">economic impact</span> on its most valuable colony. The cost of sick soldiers and lost productivity was a powerful driver of research funding. This shows that scientific priorities are not neutral; they are often set by those who hold political and economic power, and the knowledge produced, in turn, serves to reinforce that power.</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">4. Technoscience & SCOT</h3>
+                    <p class="text-sm">Was it just science driving discovery? No. The microscope and lab methods were crucial. This is a core idea of <strong class="font-semibold">technoscience</strong>—that science and technology co-produce each other. From a SCOT view, technology (the microscope) shaped the scientific knowledge just as much as science shaped the tools.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">5. Interpretive Flexibility</h3>
+                    <p class="text-sm">The goal of malaria research had <strong class="font-semibold">interpretive flexibility</strong>; it meant different things to different groups. For the British Empire, it meant protecting soldiers and colonial stability. For the Indian population, it meant survival. Colonial medicine <strong class="font-semibold">configured the user</strong> by prioritizing the needs of the British first.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">6. Actor-Network Theory (ANT)</h3>
+                    <p class="text-sm">Ross was just one node in a vast network. <strong class="font-semibold">ANT</strong> reveals the other actors: his assistants, the mosquitoes, the malaria parasite, his microscope, Indian patients, and colonial hospitals. Discovery was a <strong class="font-semibold">networked achievement</strong>, not the work of one genius.</p>
                 </div>
             </div>
         </section>
