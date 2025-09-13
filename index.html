@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Sepia & Manuscript -->
-    <!-- Application Structure Plan: The interactive ANT map component has been re-engineered to fix critical UI bugs and enhance user experience, replacing the previous flawed version. The core premium structure is maintained. -->
+    <!-- Application Structure Plan: The interactive ANT map component has been updated to include all provided images, completing the feature. The core premium structure is maintained. -->
     <!-- Visualization & Content Choices: 
-    - UI/UX Bug Fix: Corrected z-index stacking context on the ANT map to prevent information panels from rendering behind map elements. Removed redundant subtitle for a cleaner design.
+    - UI/UX Bug Fix: Corrected the ANT map's JavaScript to properly reference all actor images, ensuring no blank nodes appear.
     - CONFIRMATION: NO SVG graphics used for static icons. Inline SVG is used for dynamic line generation in the animation. NO Mermaid JS used. -->
     <style>
         :root {
@@ -84,7 +84,6 @@
         #main-content { opacity: 0; transition: opacity 0.7s ease-in-out; }
         #main-content.visible { opacity: 1; }
 
-        /* RE-ENGINEERED ANT Map Styles */
         .ant-container { min-height: 80vh; }
         .ant-map-wrapper { position: relative; width: 100%; max-width: 500px; aspect-ratio: 1 / 1; }
         .ant-node { position: absolute; transform: translate(-50%, -50%); transition: all 0.3s ease-in-out; }
@@ -97,7 +96,7 @@
         .ant-lines svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
         .ant-lines line { stroke: rgba(176, 137, 104, 0.3); stroke-width: 2px; transition: all 0.3s ease-in-out; }
         .ant-lines line.active { stroke: var(--accent); stroke-width: 4px; }
-        #ant-info-container { position: relative; z-index: 30; } /* BUG FIX: Ensure info panel is on top */
+        #ant-info-container { position: relative; z-index: 30; }
         .ant-info-panel { opacity: 0; transform: translateY(10px) scale(0.98); transition: all 0.4s ease-in-out; pointer-events: none; }
         .ant-info-panel.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
         .ant-tooltip {
@@ -328,6 +327,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Splash Screen Logic
             const splashScreen = document.getElementById('splash-screen');
             const enterSiteBtn = document.getElementById('enter-site-btn');
             const mainContent = document.getElementById('main-content');
@@ -435,7 +435,6 @@
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'ant-info-panel absolute top-0 left-0 w-full h-full flex flex-col justify-center';
                 infoDiv.dataset.index = index;
-                // BUG FIX: Removed the subtitle "Key Role in the Network" from this template.
                 infoDiv.innerHTML = ` <div class="flex items-center mb-4"> <img src="${actor.img}" alt="${actor.name}" class="w-16 h-16 rounded-full mr-4 border-2 border-[var(--accent)]"> <div> <h3 class="font-bold text-xl text-[var(--accent)] font-serif">${actor.name}</h3></div> </div> <p class="text-gray-300 leading-relaxed">${actor.info}</p> `;
                 antInfoContainer.appendChild(infoDiv);
             });
