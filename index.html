@@ -9,20 +9,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Midnight Teal & Gold -->
-    <!-- Application Structure Plan: Maintaining the premium, narrative-driven experience. 1. Hero Section updated with new user-provided background image. 2. All other content and refined text from the previous version is preserved. 3. The core high-end structure remains intact. -->
+    <!-- Chosen Palette: Sepia & Manuscript -->
+    <!-- Application Structure Plan: Maintaining the premium, narrative-driven experience. This version implements a full visual reskin based on a new, warmer, and more historical color palette. The core high-end structure and all content remain intact. -->
     <!-- Visualization & Content Choices: 
-    - UI/UX: All enhanced UI/UX elements (animations, layout, typography) from the previous version are retained.
-    - Content Integration: User-provided text has been edited and woven into the narrative of each section to enhance depth and authenticity.
+    - UI/UX: All enhanced UI/UX elements are retained. The text color within the "Ask Ross" input field has been updated to match the theme for better visual cohesion.
+    - Color Context: All colors have been updated to reflect the new "Sepia & Manuscript" theme for a more immersive, historical feel.
     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         :root {
-            --bg-light: #f8f7f4;
-            --bg-dark: #1a2a3a;
-            --text-light: #f0f0f0;
-            --text-dark: #333333;
-            --primary: #008080; /* Midnight Teal */
-            --accent: #d4af37; /* Gold */
+            --bg-light: #f5f1e8; /* Parchment */
+            --bg-dark: #3a2e24; /* Walnut */
+            --text-light: #e8e2d5;
+            --text-dark: #3d352e;
+            --primary: #8b4513; /* Saddle Brown */
+            --accent: #b08968; /* Copper */
             --border-color: rgba(255, 255, 255, 0.1);
         }
         html {
@@ -39,7 +39,7 @@
         .glass-header {
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            background-color: rgba(248, 247, 244, 0.8);
+            background-color: rgba(245, 241, 232, 0.85);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         .nav-link {
@@ -64,7 +64,7 @@
             width: 100%;
         }
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('ronald-ross-image-2.jpg') no-repeat center center;
+            background: linear-gradient(rgba(40, 30, 20, 0.6), rgba(40, 30, 20, 0.6)), url('ronald-ross-image-2.jpg') no-repeat center center;
             background-size: cover;
         }
         .section-dark {
@@ -92,7 +92,7 @@
             width: 1.25rem;
             height: 1.25rem;
             border-radius: 50%;
-            background-color: #ccc;
+            background-color: #dcd3c3;
             border: 3px solid var(--bg-light);
             transition: background-color 0.3s ease;
         }
@@ -113,7 +113,7 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .gemini-btn:hover {
-            background-color: #006666;
+            background-color: #a0522d; /* Lighter Saddle Brown */
             transform: scale(1.05);
         }
         .typing-indicator {
@@ -153,6 +153,15 @@
         .modal-content {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
+        #ask-ross-input {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        #ask-ross-input::placeholder {
+            color: var(--accent);
+            opacity: 0.8;
+            font-weight: 400;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -171,7 +180,7 @@
                     </div>
                 </div>
                 <div class="md:hidden">
-                    <select id="mobile-nav" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5">
+                    <select id="mobile-nav" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
                         <option value="#hero">Home</option>
                         <option value="#bio">The Pioneer</option>
                         <option value="#sts">STS Frameworks</option>
@@ -195,7 +204,7 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">The Reluctant Physician</h2>
-                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-600">He was a poet and an artist at heart, but duty called him to medicine. Ronald Ross joined the Indian Medical Service (IMS) to fulfill his father's plan, famously lamenting, "The money which my parents spent on my education was largely wasted." Yet, it was in India that he carved out his own destiny, finding a new calling in the relentless pursuit of a truth that would change the world.</p>
+                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">He was a poet and an artist at heart, but duty called him to medicine. Ronald Ross joined the Indian Medical Service (IMS) to fulfill his father's plan, famously lamenting, "The money which my parents spent on my education was largely wasted." Yet, it was in India that he carved out his own destiny, finding a new calling in the relentless pursuit of a truth that would change the world.</p>
                 </div>
             
                 <div class="flex flex-col md:flex-row gap-8 lg:gap-16 items-center">
@@ -247,7 +256,7 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
                 <div class="text-center mb-16">
                      <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">A Global Health Revolution</h2>
-                     <p class="text-center max-w-3xl mx-auto text-lg text-gray-600">After his discovery, Ross became a leading consultant for public health. He proposed organized malaria control programs for military camps and railway projects, and his expertise guided policies from West Africa to Ismailia, reshaping public health forever.</p>
+                     <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">After his discovery, Ross became a leading consultant for public health. He proposed organized malaria control programs for military camps and railway projects, and his expertise guided policies from West Africa to Ismailia, reshaping public health forever.</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-xl">
                     <div class="chart-container" style="height: 40vh; max-height: 450px;">
@@ -275,7 +284,7 @@
                     </div>
                     <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
                         <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">3. Technological Determinism</h3>
-                        <p class="text-sm text-gray-400">Ross's work shows how a discovery's path is guided by power. Mosquito control was quickly adopted for huge colonial projects like the <strong class="font-semibold text-gray-200">Panama Canal</strong>, demonstrating that technology's route is often determined by economic and political goals.</p>
+                        <p class="text-sm text-gray-400">Ross's work shows how a discovery's path is guided by power. Mosquito control was quickly used to benefit huge colonial projects like the <strong class="font-semibold text-gray-200">Panama Canal</strong>, demonstrating that technology's route is often determined by economic and political goals.</p>
                     </div>
                     <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
                         <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">4. Relevant Social Groups</h3>
@@ -297,7 +306,7 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold font-serif mb-2 text-[var(--primary)]">Engage with History</h2>
-                    <p class="text-center max-w-2xl mx-auto text-lg text-gray-600">History has questions. Now, it can answer. What would you ask the man who solved the malaria puzzle? Pose a question and receive a response powered by our AI.</p>
+                    <p class="text-center max-w-2xl mx-auto text-lg text-gray-700">History has questions. Now, it can answer. What would you ask the man who solved the malaria puzzle? Pose a question and receive a response powered by our AI.</p>
                 </div>
                 <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
                     <div class="flex flex-col sm:flex-row gap-4">
@@ -447,8 +456,8 @@
                 datasets: [{
                     label: 'Malaria Mortality Rate (per 100,000)',
                     data: [450, 310, 150, 60, 25],
-                    backgroundColor: 'rgba(0, 128, 128, 0.6)',
-                    borderColor: 'rgba(0, 128, 128, 1)',
+                    backgroundColor: 'rgba(139, 69, 19, 0.6)',
+                    borderColor: 'rgba(139, 69, 19, 1)',
                     borderWidth: 1,
                     borderRadius: 4
                 }]
