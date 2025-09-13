@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Sepia & Manuscript -->
-    <!-- Application Structure Plan: Maintaining the premium, narrative-driven experience. This version implements a full visual reskin based on a new, warmer, and more historical color palette. The core high-end structure and all content remain intact. -->
+    <!-- Application Structure Plan: A new introductory splash screen has been engineered to present team credits upfront. This provides a professional entry sequence before transitioning the user to the main narrative-driven experience. The core site structure and all content remain intact. -->
     <!-- Visualization & Content Choices: 
-    - UI/UX: All enhanced UI/UX elements are retained. The text color within the "Ask Ross" input field has been updated to match the theme for better visual cohesion.
-    - Color Context: All colors have been updated to reflect the new "Sepia & Manuscript" theme for a more immersive, historical feel.
+    - UI/UX: A full-screen splash page with a fade-in/fade-out transition provides a premium user experience for displaying credits. The main content fades in smoothly after the user proceeds.
+    - Color Context: The splash screen is designed to be fully consistent with the established "Sepia & Manuscript" theme.
     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         :root {
@@ -32,6 +32,7 @@
             font-family: 'Lato', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
+            overflow: hidden; /* Disable scrolling initially */
         }
         h1, h2, h3, h4, .font-serif {
             font-family: 'Playfair Display', serif;
@@ -162,218 +163,42 @@
             opacity: 0.8;
             font-weight: 400;
         }
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-dark);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.7s ease-in-out;
+            opacity: 1;
+        }
+        #splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+        }
+        #main-content.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased">
-    <header class="glass-header sticky top-0 z-50">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold font-serif text-gray-800">Ronald Ross</h1>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#bio" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">The Pioneer</a>
-                        <a href="#sts" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">STS Frameworks</a>
-                        <a href="#ask" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">Engage</a>
-                        <a href="#bookshelf" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">Bookshelf</a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <select id="mobile-nav" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
-                        <option value="#hero">Home</option>
-                        <option value="#bio">The Pioneer</option>
-                        <option value="#sts">STS Frameworks</option>
-                        <option value="#ask">Engage</option>
-                        <option value="#bookshelf">Bookshelf</option>
-                    </select>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="hero" class="hero h-screen flex flex-col justify-center items-center text-white text-center p-4">
-            <h1 class="text-5xl md:text-7xl font-bold font-serif mb-4 leading-tight">Ronald Ross: From Observation to Revelation</h1>
-            <p class="text-lg md:text-xl max-w-3xl mb-2">Sir Ronald Ross didn't just find a parasite. He redrew the map of global health.</p>
-            <p class="text-lg md:text-xl max-w-3xl mb-8 font-bold">A Project by Group-17 | HM216</p>
-            <a href="#bio" class="bg-white text-gray-800 font-bold py-3 px-8 rounded-full uppercase tracking-wider hover:bg-gray-200 transition-all duration-300">Explore the Journey</a>
-        </section>
-        
-        <div id="bio" class="py-20 md:py-28 scroll-mt-16">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">The Reluctant Physician</h2>
-                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">He was a poet and an artist at heart, but duty called him to medicine. Ronald Ross joined the Indian Medical Service (IMS) to fulfill his father's plan, famously lamenting, "The money which my parents spent on my education was largely wasted." Yet, it was in India that he carved out his own destiny, finding a new calling in the relentless pursuit of a truth that would change the world.</p>
-                </div>
-            
-                <div class="flex flex-col md:flex-row gap-8 lg:gap-16 items-center">
-                    <div class="md:w-2/5">
-                        <div class="relative pl-10 border-l-2 border-dashed border-gray-300">
-                            <div id="timeline-item-1895" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1895')">
-                                <h3 class="font-bold text-lg">1895: The Turning Point</h3>
-                                <p class="text-sm text-gray-600">A fateful meeting with Sir Patrick Manson introduced Ross to the radical mosquito-malaria theory, igniting his scientific curiosity and giving his career a new direction.</p>
-                            </div>
-                            <div id="timeline-item-1897" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1897')">
-                                <h3 class="font-bold text-lg">1897: "Mosquito Day"</h3>
-                                <p class="text-sm text-gray-600">After years of painstaking work, he discovered the malaria parasite within the Anopheles mosquito, a breakthrough moment in his relentless pursuit of the truth.</p>
-                            </div>
-                            <div id="timeline-item-1902" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1902')">
-                                <h3 class="font-bold text-lg">1902: Global Recognition</h3>
-                                <p class="text-sm text-gray-600">For his tireless work and revolutionary discovery, he was awarded the Nobel Prize in Physiology or Medicine, cementing his place in history.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-xl text-center md:text-left">
-                        <img src="ronald-image.jpg" alt="Portrait of Sir Ronald Ross" class="w-32 h-32 rounded-full mx-auto md:mx-0 md:float-left md:mr-6 mb-4 object-cover ring-4 ring-white">
-                        <h3 id="timeline-title" class="text-2xl font-bold font-serif mb-4 text-[var(--primary)]">The Discovery of a Lifetime</h3>
-                        <p id="timeline-text" class="text-gray-700 leading-relaxed">From an ordinary man to a Nobel laureate—a doctor, mathematician, and poet—he dedicated his life to the noble work of healing. Click a date to explore his journey.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-dark py-20 md:py-28">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold font-serif mb-2 text-white">Science in the Service of Empire</h2>
-                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">As an IMS officer, Ross saw firsthand how malaria crippled the British colonial machine. His work was not pure science; it was a strategic necessity, and his discovery spread not just because it was true, but because it served the powerful interests of the British government.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-                    <div class="bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="text-xl font-bold font-serif mb-2 text-[var(--accent)]">A Strategic Imperative</h3>
-                        <p class="text-gray-400">Malaria wasn't just a health crisis; it was an obstacle to expansion. Protecting European soldiers and administrators was essential for control, making malaria research a state-funded priority.</p>
-                    </div>
-                    <div class="bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="text-xl font-bold font-serif mb-2 text-[var(--accent)]">The 'Civilizing Mission'</h3>
-                        <p class="text-gray-400">Medical advances were often presented as a benefit of imperial rule. This reinforced colonial hierarchies, framing scientific progress as a gift from the Empire to its subjects.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="impact" class="py-20 md:py-28">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                <div class="text-center mb-16">
-                     <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">A Global Health Revolution</h2>
-                     <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">After his discovery, Ross became a leading consultant for public health. He proposed organized malaria control programs for military camps and railway projects, and his expertise guided policies from West Africa to Ismailia, reshaping public health forever.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-xl">
-                    <div class="chart-container" style="height: 40vh; max-height: 450px;">
-                        <canvas id="impactChart"></canvas>
-                    </div>
-                    <p class="text-center text-sm text-gray-500 mt-4">Conceptual graph illustrating the typical, dramatic decline in malaria mortality seen in campaigns like the Panama Canal project, which were made possible by Ross's discovery.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="sts" class="section-dark py-20 md:py-28 scroll-mt-16">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold font-serif mb-2 text-white">Framing Ross in STS Terms</h2>
-                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">Was Ross's discovery a pure moment of scientific genius? Or was it something more? The field of Science, Technology, and Society (STS) gives us the tools to look deeper, revealing how breakthroughs are always tangled up in the culture, politics, and technology of their time.</p>
-                </div>
-                <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">1. Kuhn's Paradigm Shift</h3>
-                        <p class="text-sm text-gray-400">The Old Belief: For centuries, people thought malaria came from 'miasma' or 'bad air.' The Paradigm Shift: Ross proved it was a living parasite transmitted by a mosquito. This completely changed the game, turning the focus from foul vapors to a biological enemy.</p>
-                    </div>
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">2. Technoscience</h3>
-                        <p class="text-sm text-gray-400">The science (finding the parasite) and the technology (the microscope) were inseparable. The microscope wasn't just a passive tool; it actively shaped what Ross could see and, therefore, what he could know. This fusion is the essence of technoscience.</p>
-                    </div>
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">3. Technological Determinism</h3>
-                        <p class="text-sm text-gray-400">Ross's work shows how a discovery's path is guided by power. Mosquito control was quickly used to benefit huge colonial projects like the <strong class="font-semibold text-gray-200">Panama Canal</strong>, demonstrating that technology's route is often determined by economic and political goals.</p>
-                    </div>
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">4. Relevant Social Groups</h3>
-                        <p class="text-sm text-gray-400">The "truth" of Ross's work spread because it served powerful groups. For the <strong class="font-semibold text-gray-200">British Army</strong>, it was a strategic advantage. For the <strong class="font-semibold text-gray-200">local Indian population</strong>, however, it simply meant a chance at survival.</p>
-                    </div>
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">5. Whig History vs. Real History</h3>
-                        <p class="text-sm text-gray-400">Ross is often portrayed as a lone “hero scientist.” STS warns this is a <strong class="font-semibold text-gray-200">Whig history</strong> trap—a clean story of inevitable progress. The real story is messier, involving chance, uncredited assistants, and the wider network that enabled his discovery.</p>
-                    </div>
-                    <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
-                        <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">6. Actor-Network Theory (ANT)</h3>
-                        <p class="text-sm text-gray-400">This is where we map the network. Ross was just one node. The other actors include: <strong class="font-semibold text-gray-200">Sir Patrick Manson, his Indian assistants, the Anopheles mosquitoes, the Plasmodium parasite, his microscope, and the patients themselves</strong>. Discovery was a networked achievement, not the work of one man.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div id="ask" class="py-20 md:py-28 scroll-mt-16">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold font-serif mb-2 text-[var(--primary)]">Engage with History</h2>
-                    <p class="text-center max-w-2xl mx-auto text-lg text-gray-700">History has questions. Now, it can answer. What would you ask the man who solved the malaria puzzle? Pose a question and receive a response powered by our AI.</p>
-                </div>
-                <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <input type="text" id="ask-ross-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition" placeholder="e.g., What was your greatest challenge?">
-                        <button id="ask-ross-btn" class="gemini-btn px-8 py-3 rounded-lg font-bold">Ask Ross</button>
-                    </div>
-                    <div id="ask-ross-response" class="mt-6 p-6 bg-gray-50 rounded-lg min-h-[120px] text-gray-700 italic border border-gray-200 leading-relaxed">
-                        Your question awaits an answer from the past...
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div id="bookshelf" class="section-dark py-20 md:py-28 scroll-mt-16">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold font-serif mb-2 text-white">The Bookshelf: Further Reading</h2>
-                    <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">To delve deeper into the world of Ronald Ross, explore these readings. Get a quick overview with an AI-powered summary for each book.</p>
-                </div>
-                <div class="flex justify-center flex-wrap gap-3 mb-10">
-                    <button class="filter-btn active px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="all">All</button>
-                    <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="primary">By Ross</button>
-                    <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="context">Historical Context</button>
-                    <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="impact">Societal Impact</button>
-                </div>
-                <div id="book-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="primary" data-title="Memoirs" data-author="Ronald Ross">
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Memoirs</h3>
-                            <p class="text-sm font-semibold mb-2 text-gray-300">By Ronald Ross</p>
-                            <p class="text-sm text-gray-400">The essential primary source. Ross details his scientific struggles, frustrations, and his broad views on the role of science in improving the human condition.</p>
-                        </div>
-                        <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
-                    </div>
-                     <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="context" data-title="Colonizing the Body" data-author="David Arnold">
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Colonizing the Body</h3>
-                            <p class="text-sm font-semibold mb-2 text-gray-300">By David Arnold</p>
-                            <p class="text-sm text-gray-400">Examines how state medicine and public health initiatives were implemented in 19th-century India within the framework of colonial governance.</p>
-                        </div>
-                        <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
-                    </div>
-                    <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="context" data-title="Public Health in British India" data-author="Mark Harrison">
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Public Health in British India</h3>
-                            <p class="text-sm font-semibold mb-2 text-gray-300">By Mark Harrison</p>
-                            <p class="text-sm text-gray-400">Details Anglo-Indian preventive medicine, crucial for understanding the administrative and ideological context in which Ross operated.</p>
-                        </div>
-                        <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
-                    </div>
-                    <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="impact" data-title="The Western Medical Tradition, 1800-2000" data-author="W.F. Bynum, et al.">
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--accent)] font-serif">The Western Medical Tradition</h3>
-                            <p class="text-sm font-semibold mb-2 text-gray-300">By W.F. Bynum, et al.</p>
-                            <p class="text-sm text-gray-400">Places Ross's discovery within the broader narrative of Western medicine, showing how germ theory created the conditions for his breakthrough.</p>
-                        </div>
-                        <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="bg-gray-800 pt-16 pb-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-            <h3 class="text-2xl font-serif text-white mb-4">A Project by Group-17</h3>
-            <div class="text-sm text-gray-500 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-2 max-w-4xl mx-auto">
+    
+    <div id="splash-screen">
+        <div class="text-center p-8 text-white">
+            <h1 class="text-4xl md:text-6xl font-serif mb-4">Ronald Ross: From Observation to Revelation</h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">A Project by Group-17 | HM216</p>
+            <div class="text-sm text-gray-400 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-3 max-w-5xl mx-auto mb-12">
                 <p>Vivek Amipara - 202401013</p>
                 <p>Het Bhungaliya - 202401033</p>
                 <p>Nisarg Patel - 202403033</p>
@@ -385,239 +210,468 @@
                 <p>Babariya Urvish - 202401020</p>
                 <p>Modiya Krish - 202401120</p>
             </div>
-            <p class="mt-8 text-xs text-gray-600">&copy; 2025. This project is for educational purposes.</p>
-        </div>
-    </footer>
-
-    <div id="summary-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 modal-overlay opacity-0 pointer-events-none">
-        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-2xl p-8 modal-content transform scale-95 opacity-0">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="modal-title" class="text-2xl font-bold font-serif text-[var(--primary)]">AI-Generated Summary</h3>
-                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-800 text-3xl">&times;</button>
-            </div>
-            <div id="modal-body" class="text-gray-700 leading-relaxed">
-                <div class="flex justify-center items-center h-32">
-                    <div class="loader"></div>
-                </div>
-            </div>
+            <button id="enter-site-btn" class="bg-[var(--accent)] text-white font-bold py-3 px-10 rounded-full uppercase tracking-wider hover:bg-[#c99e7b] transition-all duration-300 transform hover:scale-105">
+                Explore the Journey
+            </button>
         </div>
     </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const timelineData = {
-            '1895': {
-                title: 'A Fateful Encounter',
-                text: 'A pivotal meeting with Sir Patrick Manson introduced Ross to the then-radical theory that mosquitoes transmitted malaria. This encounter ignited a passion and set him on his path of discovery.'
-            },
-            '1897': {
-                title: 'August 20th: "Mosquito Day"',
-                text: 'After years of relentless work, Ross finally identified the malaria parasite within the stomach of an Anopheles mosquito. He knew he had found the vector, a moment of pure revelation.'
-            },
-            '1902': {
-                title: 'Global Recognition',
-                text: 'For his discovery, Ross was awarded the Nobel Prize. His work provided the scientific foundation for all modern anti-malarial strategies, shifting the focus to vector control.'
-            }
-        };
+    <div id="main-content">
+        <header class="glass-header sticky top-0 z-50">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold font-serif text-gray-800">Ronald Ross</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-8">
+                            <a href="#bio" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">The Pioneer</a>
+                            <a href="#sts" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">STS Frameworks</a>
+                            <a href="#ask" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">Engage</a>
+                            <a href="#bookshelf" class="nav-link px-1 py-2 text-sm font-bold uppercase tracking-wider text-gray-600">Bookshelf</a>
+                        </div>
+                    </div>
+                    <div class="md:hidden">
+                        <select id="mobile-nav" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
+                            <option value="#hero">Home</option>
+                            <option value="#bio">The Pioneer</option>
+                            <option value="#sts">STS Frameworks</option>
+                            <option value="#ask">Engage</option>
+                            <option value="#bookshelf">Bookshelf</option>
+                        </select>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-        function updateTimelineInfo(year) {
-            document.getElementById('timeline-title').innerText = timelineData[year].title;
-            document.getElementById('timeline-text').innerText = timelineData[year].text;
+        <main>
+            <section id="hero" class="hero h-screen flex flex-col justify-center items-center text-white text-center p-4">
+                <h1 class="text-5xl md:text-7xl font-bold font-serif mb-4 leading-tight">Ronald Ross: From Observation to Revelation</h1>
+                <p class="text-lg md:text-xl max-w-3xl mb-2">Sir Ronald Ross didn't just find a parasite. He redrew the map of global health.</p>
+                <p class="text-lg md:text-xl max-w-3xl mb-8 font-bold">A Project by Group-17 | HM216</p>
+                <a href="#bio" class="bg-white text-gray-800 font-bold py-3 px-8 rounded-full uppercase tracking-wider hover:bg-gray-200 transition-all duration-300">Explore the Journey</a>
+            </section>
             
-            document.querySelectorAll('.timeline-item').forEach(item => item.classList.remove('active'));
-            document.getElementById(`timeline-item-${year}`).classList.add('active');
-        }
-
-        window.updateTimelineInfo = updateTimelineInfo;
-        updateTimelineInfo('1897');
-
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const bookCards = document.querySelectorAll('.book-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const currentActive = document.querySelector('.filter-btn.active');
-                if(currentActive) currentActive.classList.remove('active', 'bg-[var(--accent)]', 'text-black');
+            <div id="bio" class="py-20 md:py-28 scroll-mt-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">The Reluctant Physician</h2>
+                        <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">He was a poet and an artist at heart, but duty called him to medicine. Ronald Ross joined the Indian Medical Service (IMS) to fulfill his father's plan, famously lamenting, "The money which my parents spent on my education was largely wasted." Yet, it was in India that he carved out his own destiny, finding a new calling in the relentless pursuit of a truth that would change the world.</p>
+                    </div>
                 
-                btn.classList.add('active', 'bg-[var(--accent)]', 'text-black');
-                const filter = btn.dataset.filter;
-                bookCards.forEach(card => {
-                    card.style.display = (filter === 'all' || card.dataset.category.includes(filter)) ? 'flex' : 'none';
+                    <div class="flex flex-col md:flex-row gap-8 lg:gap-16 items-center">
+                        <div class="md:w-2/5">
+                            <div class="relative pl-10 border-l-2 border-dashed border-gray-300">
+                                <div id="timeline-item-1895" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1895')">
+                                    <h3 class="font-bold text-lg">1895: The Turning Point</h3>
+                                    <p class="text-sm text-gray-600">A fateful meeting with Sir Patrick Manson introduced Ross to the radical mosquito-malaria theory, igniting his scientific curiosity and giving his career a new direction.</p>
+                                </div>
+                                <div id="timeline-item-1897" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1897')">
+                                    <h3 class="font-bold text-lg">1897: "Mosquito Day"</h3>
+                                    <p class="text-sm text-gray-600">After years of painstaking work, he discovered the malaria parasite within the Anopheles mosquito, a breakthrough moment in his relentless pursuit of the truth.</p>
+                                </div>
+                                <div id="timeline-item-1902" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1902')">
+                                    <h3 class="font-bold text-lg">1902: Global Recognition</h3>
+                                    <p class="text-sm text-gray-600">For his tireless work and revolutionary discovery, he was awarded the Nobel Prize in Physiology or Medicine, cementing his place in history.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-xl text-center md:text-left">
+                            <img src="ronald-image.jpg" alt="Portrait of Sir Ronald Ross" class="w-32 h-32 rounded-full mx-auto md:mx-0 md:float-left md:mr-6 mb-4 object-cover ring-4 ring-white">
+                            <h3 id="timeline-title" class="text-2xl font-bold font-serif mb-4 text-[var(--primary)]">The Discovery of a Lifetime</h3>
+                            <p id="timeline-text" class="text-gray-700 leading-relaxed">From an ordinary man to a Nobel laureate—a doctor, mathematician, and poet—he dedicated his life to the noble work of healing. Click a date to explore his journey.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-dark py-20 md:py-28">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold font-serif mb-2 text-white">Science in the Service of Empire</h2>
+                        <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">As an IMS officer, Ross saw firsthand how malaria crippled the British colonial machine. His work was not pure science; it was a strategic necessity, and his discovery spread not just because it was true, but because it served the powerful interests of the British government.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
+                        <div class="bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="text-xl font-bold font-serif mb-2 text-[var(--accent)]">A Strategic Imperative</h3>
+                            <p class="text-gray-400">Malaria wasn't just a health crisis; it was an obstacle to expansion. Protecting European soldiers and administrators was essential for control, making malaria research a state-funded priority.</p>
+                        </div>
+                        <div class="bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="text-xl font-bold font-serif mb-2 text-[var(--accent)]">The 'Civilizing Mission'</h3>
+                            <p class="text-gray-400">Medical advances were often presented as a benefit of imperial rule. This reinforced colonial hierarchies, framing scientific progress as a gift from the Empire to its subjects.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="impact" class="py-20 md:py-28">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                    <div class="text-center mb-16">
+                         <h2 class="text-4xl font-bold font-serif text-center mb-2 text-[var(--primary)]">A Global Health Revolution</h2>
+                         <p class="text-center max-w-3xl mx-auto text-lg text-gray-700">After his discovery, Ross became a leading consultant for public health. He proposed organized malaria control programs for military camps and railway projects, and his expertise guided policies from West Africa to Ismailia, reshaping public health forever.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <div class="chart-container" style="height: 40vh; max-height: 450px;">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-4">Conceptual graph illustrating the typical, dramatic decline in malaria mortality seen in campaigns like the Panama Canal project, which were made possible by Ross's discovery.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sts" class="section-dark py-20 md:py-28 scroll-mt-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold font-serif mb-2 text-white">Framing Ross in STS Terms</h2>
+                        <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">Was Ross's discovery a pure moment of scientific genius? Or was it something more? The field of Science, Technology, and Society (STS) gives us the tools to look deeper, revealing how breakthroughs are always tangled up in the culture, politics, and technology of their time.</p>
+                    </div>
+                    <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">1. Kuhn's Paradigm Shift</h3>
+                            <p class="text-sm text-gray-400">The Old Belief: For centuries, people thought malaria came from 'miasma' or 'bad air.' The Paradigm Shift: Ross proved it was a living parasite transmitted by a mosquito. This completely changed the game, turning the focus from foul vapors to a biological enemy.</p>
+                        </div>
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">2. Technoscience</h3>
+                            <p class="text-sm text-gray-400">The science (finding the parasite) and the technology (the microscope) were inseparable. The microscope wasn't just a passive tool; it actively shaped what Ross could see and, therefore, what he could know. This fusion is the essence of technoscience.</p>
+                        </div>
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">3. Technological Determinism</h3>
+                            <p class="text-sm text-gray-400">Ross's work shows how a discovery's path is guided by power. Mosquito control was quickly used to benefit huge colonial projects like the <strong class="font-semibold text-gray-200">Panama Canal</strong>, demonstrating that technology's route is often determined by economic and political goals.</p>
+                        </div>
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">4. Relevant Social Groups</h3>
+                            <p class="text-sm text-gray-400">The "truth" of Ross's work spread because it served powerful groups. For the <strong class="font-semibold text-gray-200">British Army</strong>, it was a strategic advantage. For the <strong class="font-semibold text-gray-200">local Indian population</strong>, however, it simply meant a chance at survival.</p>
+                        </div>
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">5. Whig History vs. Real History</h3>
+                            <p class="text-sm text-gray-400">Ross is often portrayed as a lone “hero scientist.” STS warns this is a <strong class="font-semibold text-gray-200">Whig history</strong> trap—a clean story of inevitable progress. The real story is messier, involving chance, uncredited assistants, and the wider network that enabled his discovery.</p>
+                        </div>
+                        <div class="sts-card bg-gray-800/50 p-6 rounded-lg border border-[var(--border-color)]">
+                            <h3 class="font-bold text-lg mb-2 text-[var(--accent)] font-serif">6. Actor-Network Theory (ANT)</h3>
+                            <p class="text-sm text-gray-400">This is where we map the network. Ross was just one node. The other actors include: <strong class="font-semibold text-gray-200">Sir Patrick Manson, his Indian assistants, the Anopheles mosquitoes, the Plasmodium parasite, his microscope, and the patients themselves</strong>. Discovery was a networked achievement, not the work of one man.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ask" class="py-20 md:py-28 scroll-mt-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold font-serif mb-2 text-[var(--primary)]">Engage with History</h2>
+                        <p class="text-center max-w-2xl mx-auto text-lg text-gray-700">History has questions. Now, it can answer. What would you ask the man who solved the malaria puzzle? Pose a question and receive a response powered by our AI.</p>
+                    </div>
+                    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="text" id="ask-ross-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition" placeholder="e.g., What was your greatest challenge?">
+                            <button id="ask-ross-btn" class="gemini-btn px-8 py-3 rounded-lg font-bold">Ask Ross</button>
+                        </div>
+                        <div id="ask-ross-response" class="mt-6 p-6 bg-gray-50 rounded-lg min-h-[120px] text-gray-700 italic border border-gray-200 leading-relaxed">
+                            Your question awaits an answer from the past...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bookshelf" class="section-dark py-20 md:py-28 scroll-mt-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                     <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold font-serif mb-2 text-white">The Bookshelf: Further Reading</h2>
+                        <p class="text-center max-w-3xl mx-auto text-lg text-gray-300">To delve deeper into the world of Ronald Ross, explore these readings. Get a quick overview with an AI-powered summary for each book.</p>
+                    </div>
+                    <div class="flex justify-center flex-wrap gap-3 mb-10">
+                        <button class="filter-btn active px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="all">All</button>
+                        <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="primary">By Ross</button>
+                        <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="context">Historical Context</button>
+                        <button class="filter-btn px-4 py-2 bg-gray-700/50 text-white rounded-full text-sm font-bold border border-[var(--border-color)]" data-filter="impact">Societal Impact</button>
+                    </div>
+                    <div id="book-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="primary" data-title="Memoirs" data-author="Ronald Ross">
+                            <div>
+                                <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Memoirs</h3>
+                                <p class="text-sm font-semibold mb-2 text-gray-300">By Ronald Ross</p>
+                                <p class="text-sm text-gray-400">The essential primary source. Ross details his scientific struggles, frustrations, and his broad views on the role of science in improving the human condition.</p>
+                            </div>
+                            <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
+                        </div>
+                         <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="context" data-title="Colonizing the Body" data-author="David Arnold">
+                            <div>
+                                <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Colonizing the Body</h3>
+                                <p class="text-sm font-semibold mb-2 text-gray-300">By David Arnold</p>
+                                <p class="text-sm text-gray-400">Examines how state medicine and public health initiatives were implemented in 19th-century India within the framework of colonial governance.</p>
+                            </div>
+                            <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
+                        </div>
+                        <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="context" data-title="Public Health in British India" data-author="Mark Harrison">
+                            <div>
+                                <h3 class="font-bold text-lg text-[var(--accent)] font-serif">Public Health in British India</h3>
+                                <p class="text-sm font-semibold mb-2 text-gray-300">By Mark Harrison</p>
+                                <p class="text-sm text-gray-400">Details Anglo-Indian preventive medicine, crucial for understanding the administrative and ideological context in which Ross operated.</p>
+                            </div>
+                            <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
+                        </div>
+                        <div class="book-card flex flex-col justify-between bg-gray-800/50 rounded-lg p-6 border border-[var(--border-color)]" data-category="impact" data-title="The Western Medical Tradition, 1800-2000" data-author="W.F. Bynum, et al.">
+                            <div>
+                                <h3 class="font-bold text-lg text-[var(--accent)] font-serif">The Western Medical Tradition</h3>
+                                <p class="text-sm font-semibold mb-2 text-gray-300">By W.F. Bynum, et al.</p>
+                                <p class="text-sm text-gray-400">Places Ross's discovery within the broader narrative of Western medicine, showing how germ theory created the conditions for his breakthrough.</p>
+                            </div>
+                            <button class="summary-btn mt-6 gemini-btn text-sm font-bold py-2 px-4 rounded-lg w-full">✨ Get AI Summary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-800 pt-16 pb-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+                <h3 class="text-2xl font-serif text-white mb-4">A Project by Group-17</h3>
+                <p class="mt-8 text-xs text-gray-600">&copy; 2025. This project is for educational purposes.</p>
+            </div>
+        </footer>
+
+        <div id="summary-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 modal-overlay opacity-0 pointer-events-none">
+            <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-2xl p-8 modal-content transform scale-95 opacity-0">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-title" class="text-2xl font-bold font-serif text-[var(--primary)]">AI-Generated Summary</h3>
+                    <button id="close-modal-btn" class="text-gray-400 hover:text-gray-800 text-3xl">&times;</button>
+                </div>
+                <div id="modal-body" class="text-gray-700 leading-relaxed">
+                    <div class="flex justify-center items-center h-32">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.getElementById('splash-screen');
+            const enterSiteBtn = document.getElementById('enter-site-btn');
+            const mainContent = document.getElementById('main-content');
+
+            enterSiteBtn.addEventListener('click', () => {
+                splashScreen.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+                mainContent.classList.add('visible');
+
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 700); // Match CSS transition duration
+            });
+
+            const timelineData = {
+                '1895': {
+                    title: 'A Fateful Encounter',
+                    text: 'A pivotal meeting with Sir Patrick Manson introduced Ross to the then-radical theory that mosquitoes transmitted malaria. This encounter ignited a passion and set him on his path of discovery.'
+                },
+                '1897': {
+                    title: 'August 20th: "Mosquito Day"',
+                    text: 'After years of relentless work, Ross finally identified the malaria parasite within the stomach of an Anopheles mosquito. He knew he had found the vector, a moment of pure revelation.'
+                },
+                '1902': {
+                    title: 'Global Recognition',
+                    text: 'For his discovery, Ross was awarded the Nobel Prize. His work provided the scientific foundation for all modern anti-malarial strategies, shifting the focus to vector control.'
+                }
+            };
+
+            function updateTimelineInfo(year) {
+                document.getElementById('timeline-title').innerText = timelineData[year].title;
+                document.getElementById('timeline-text').innerText = timelineData[year].text;
+                
+                document.querySelectorAll('.timeline-item').forEach(item => item.classList.remove('active'));
+                document.getElementById(`timeline-item-${year}`).classList.add('active');
+            }
+
+            window.updateTimelineInfo = updateTimelineInfo;
+            updateTimelineInfo('1897');
+
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const bookCards = document.querySelectorAll('.book-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const currentActive = document.querySelector('.filter-btn.active');
+                    if(currentActive) currentActive.classList.remove('active', 'bg-[var(--accent)]', 'text-black');
+                    
+                    btn.classList.add('active', 'bg-[var(--accent)]', 'text-black');
+                    const filter = btn.dataset.filter;
+                    bookCards.forEach(card => {
+                        card.style.display = (filter === 'all' || card.dataset.category.includes(filter)) ? 'flex' : 'none';
+                    });
                 });
             });
-        });
-        filterBtns[0].classList.add('active', 'bg-[var(--accent)]', 'text-black');
+            filterBtns[0].classList.add('active', 'bg-[var(--accent)]', 'text-black');
 
-        const ctx = document.getElementById('impactChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Pre-Intervention', 'Year 1', 'Year 5', 'Year 10', 'Year 20'],
-                datasets: [{
-                    label: 'Malaria Mortality Rate (per 100,000)',
-                    data: [450, 310, 150, 60, 25],
-                    backgroundColor: 'rgba(139, 69, 19, 0.6)',
-                    borderColor: 'rgba(139, 69, 19, 1)',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { 
-                        beginAtZero: true, 
-                        title: { display: true, text: 'Deaths per 100,000 Population', font: { family: "'Lato', sans-serif"}},
-                        ticks: { color: '#6b7280' },
-                        grid: { color: '#e5e7eb' }
-                    },
-                    x: { 
-                        title: { display: true, text: 'Years After Mosquito Control Implementation', font: { family: "'Lato', sans-serif"}},
-                        ticks: { color: '#6b7280' },
-                        grid: { display: false }
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Pre-Intervention', 'Year 1', 'Year 5', 'Year 10', 'Year 20'],
+                    datasets: [{
+                        label: 'Malaria Mortality Rate (per 100,000)',
+                        data: [450, 310, 150, 60, 25],
+                        backgroundColor: 'rgba(139, 69, 19, 0.6)',
+                        borderColor: 'rgba(139, 69, 19, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            title: { display: true, text: 'Deaths per 100,000 Population', font: { family: "'Lato', sans-serif"}},
+                            ticks: { color: '#6b7280' },
+                            grid: { color: '#e5e7eb' }
+                        },
+                        x: { 
+                            title: { display: true, text: 'Years After Mosquito Control Implementation', font: { family: "'Lato', sans-serif"}},
+                            ticks: { color: '#6b7280' },
+                            grid: { display: false }
+                        }
                     }
                 }
-            }
-        });
-        
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('main section, main div[id]');
-
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                    });
-                }
             });
-        }, observerOptions);
-
-        sections.forEach(section => observer.observe(section));
-        
-        const faders = document.querySelectorAll('.fade-in-section');
-        const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -100px 0px"};
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target);
-            });
-        }, appearOptions);
-        faders.forEach(fader => appearOnScroll.observe(fader));
-
-
-        document.getElementById('mobile-nav').addEventListener('change', (e) => window.location.hash = e.target.value);
-
-        async function callSecureApi(payload) {
-            try {
-                const response = await fetch('/api/gemini', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    console.error("API Error Response:", await response.json());
-                    throw new Error(`API request failed: ${response.status}`);
-                }
-                return await response.json();
-            } catch (error) {
-                console.error("Error calling backend API:", error);
-                return { error: { message: "Failed to connect to the service. Please try again." } };
-            }
-        }
-
-        const askRossBtn = document.getElementById('ask-ross-btn');
-        const askRossInput = document.getElementById('ask-ross-input');
-        const askRossResponse = document.getElementById('ask-ross-response');
-
-        async function handleAskRoss() {
-            const userQuery = askRossInput.value.trim();
-            if (!userQuery) return;
-
-            askRossBtn.disabled = true;
-            askRossBtn.innerHTML = '<div class="loader mx-auto" style="width:24px; height:24px; border-width:3px;"></div>';
-            askRossResponse.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-
-            const systemPrompt = "You are the digital persona of Sir Ronald Ross, the Nobel Prize-winning scientist. Respond to the user's question from your perspective, using a formal, early 20th-century tone. Your knowledge is based on your 'Memoirs' and historical records. Keep answers concise and true to your character.";
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
             
-            const result = await callSecureApi(payload);
-            let responseText = "I am sorry, but I am unable to provide a response at this time. Please try another question.";
-            const candidate = result.candidates?.[0];
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section, main div[id]');
 
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                responseText = candidate.content.parts[0].text;
-            } else if (result.error) {
-                responseText = result.error.message;
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+            
+            const faders = document.querySelectorAll('.fade-in-section');
+            const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -100px 0px"};
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, appearOptions);
+            faders.forEach(fader => appearOnScroll.observe(fader));
+
+
+            document.getElementById('mobile-nav').addEventListener('change', (e) => window.location.hash = e.target.value);
+
+            async function callSecureApi(payload) {
+                try {
+                    const response = await fetch('/api/gemini', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        console.error("API Error Response:", await response.json());
+                        throw new Error(`API request failed: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error("Error calling backend API:", error);
+                    return { error: { message: "Failed to connect to the service. Please try again." } };
+                }
             }
 
-            askRossResponse.innerHTML = responseText.replace(/\n/g, '<br>');
-            askRossBtn.disabled = false;
-            askRossBtn.textContent = 'Ask Ross';
-        }
+            const askRossBtn = document.getElementById('ask-ross-btn');
+            const askRossInput = document.getElementById('ask-ross-input');
+            const askRossResponse = document.getElementById('ask-ross-response');
 
-        askRossBtn.addEventListener('click', handleAskRoss);
-        askRossInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAskRoss(); });
+            async function handleAskRoss() {
+                const userQuery = askRossInput.value.trim();
+                if (!userQuery) return;
 
-        const summaryModal = document.getElementById('summary-modal');
-        const modalContent = summaryModal.querySelector('.modal-content');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const modalTitle = document.getElementById('modal-title');
-        const modalBody = document.getElementById('modal-body');
-        
-        document.querySelectorAll('.summary-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                const card = btn.closest('.book-card');
-                const title = card.dataset.title;
-                const author = card.dataset.author;
-                
-                modalTitle.textContent = `Summary for "${title}"`;
-                modalBody.innerHTML = '<div class="flex justify-center items-center h-32"><div class="loader"></div></div>';
-                showModal();
+                askRossBtn.disabled = true;
+                askRossBtn.innerHTML = '<div class="loader mx-auto" style="width:24px; height:24px; border-width:3px;"></div>';
+                askRossResponse.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
 
-                const systemPrompt = "You are a helpful literary assistant. Provide a concise, one-paragraph summary of the book, focusing on its relevance to Sir Ronald Ross and the context of science in his era.";
-                const userQuery = `Summarize the book: ${title} by ${author}.`;
-                
+                const systemPrompt = "You are the digital persona of Sir Ronald Ross, the Nobel Prize-winning scientist. Respond to the user's question from your perspective, using a formal, early 20th-century tone. Your knowledge is based on your 'Memoirs' and historical records. Keep answers concise and true to your character.";
                 const payload = {
                     contents: [{ parts: [{ text: userQuery }] }],
-                    tools: [{ "google_search": {} }],
                     systemInstruction: { parts: [{ text: systemPrompt }] },
                 };
-
+                
                 const result = await callSecureApi(payload);
-                let responseText = "Could not generate summary at this time.";
-                if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-                     responseText = result.candidates[0].content.parts[0].text;
+                let responseText = "I am sorry, but I am unable to provide a response at this time. Please try another question.";
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    responseText = candidate.content.parts[0].text;
+                } else if (result.error) {
+                    responseText = result.error.message;
                 }
-                modalBody.innerHTML = responseText.replace(/\n/g, '<br>');
+
+                askRossResponse.innerHTML = responseText.replace(/\n/g, '<br>');
+                askRossBtn.disabled = false;
+                askRossBtn.textContent = 'Ask Ross';
+            }
+
+            askRossBtn.addEventListener('click', handleAskRoss);
+            askRossInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAskRoss(); });
+
+            const summaryModal = document.getElementById('summary-modal');
+            const modalContent = summaryModal.querySelector('.modal-content');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            
+            document.querySelectorAll('.summary-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const card = btn.closest('.book-card');
+                    const title = card.dataset.title;
+                    const author = card.dataset.author;
+                    
+                    modalTitle.textContent = `Summary for "${title}"`;
+                    modalBody.innerHTML = '<div class="flex justify-center items-center h-32"><div class="loader"></div></div>';
+                    showModal();
+
+                    const systemPrompt = "You are a helpful literary assistant. Provide a concise, one-paragraph summary of the book, focusing on its relevance to Sir Ronald Ross and the context of science in his era.";
+                    const userQuery = `Summarize the book: ${title} by ${author}.`;
+                    
+                    const payload = {
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        tools: [{ "google_search": {} }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                    };
+
+                    const result = await callSecureApi(payload);
+                    let responseText = "Could not generate summary at this time.";
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                         responseText = result.candidates[0].content.parts[0].text;
+                    }
+                    modalBody.innerHTML = responseText.replace(/\n/g, '<br>');
+                });
             });
+
+            function showModal() {
+                summaryModal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            }
+            function hideModal() {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    summaryModal.classList.add('opacity-0', 'pointer-events-none');
+                }, 300);
+            }
+
+            closeModalBtn.addEventListener('click', hideModal);
+            summaryModal.addEventListener('click', (e) => { if (e.target === summaryModal) hideModal(); });
         });
-
-        function showModal() {
-            summaryModal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-            }, 10);
-        }
-        function hideModal() {
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                summaryModal.classList.add('opacity-0', 'pointer-events-none');
-            }, 300);
-        }
-
-        closeModalBtn.addEventListener('click', hideModal);
-        summaryModal.addEventListener('click', (e) => { if (e.target === summaryModal) hideModal(); });
-    });
-</script>
+    </script>
 </body>
 </html>
 
