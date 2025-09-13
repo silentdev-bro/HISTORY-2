@@ -10,15 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Vintage Scholar -->
-    <!-- Application Structure Plan: The SPA is designed as a thematic exploration hub, moving from the personal to the societal. It avoids a linear report structure for a more engaging, user-driven discovery path. The flow is: 1. Introduction to Ross (Bio & Timeline), 2. Context of his work (Science in the Empire), 3. The societal results (Impact), 4. His personal philosophy (Vision), 5. A new dynamic section on Science, Technology & Society (STS) connections, 6. AI Chat with Ross's Persona, and 7. An expanded further reading section (Bookshelf with AI summaries). This structure allows users to either follow a narrative or jump directly to the section that interests them, maximizing usability. -->
+    <!-- Application Structure Plan: The SPA is a thematic exploration hub. The flow is: 1. Bio with Photo & Timeline, 2. Science & Empire Context, 3. Societal Impact, 4. His Vision, 5. A revised, point-based STS analysis, 6. AI Chat with Ross's Persona, and 7. An expanded Bookshelf with AI summaries. The STS section is now a more direct, scannable academic summary. -->
     <!-- Visualization & Content Choices: 
-    - Report Info: Ross's life/career -> Goal: Inform -> Viz/Presentation: Interactive Timeline (HTML/CSS/JS) -> Interaction: Click on key dates to reveal details -> Justification: More engaging than a static list of dates.
-    - Report Info: Impact of malaria control -> Goal: Show Change -> Viz/Presentation: Bar Chart (Chart.js Canvas) -> Interaction: Hover for tooltips -> Justification: Clear quantitative demonstration.
-    - Report Info: Ross's STS connections -> Goal: Analyze/Inform -> Viz/Presentation: Dynamic Text Generation Area -> Interaction: User clicks button to generate a grounded analysis with sources via Gemini API -> Justification: Provides deep, verifiable academic context on demand, linking Ross to major STS theories.
-    - Report Info: User Questions about Ross -> Goal: Engage/Inform -> Viz/Presentation: AI Chat Interface -> Interaction: User inputs question, receives response from a "digital persona" -> Justification: Immersive educational experience.
-    - Report Info: Book recommendations -> Goal: Organize/Inform -> Viz/Presentation: Expanded Filterable Book Grid -> Interaction: Click filter buttons, click "Get Summary" for AI overview -> Justification: Comprehensive, value-added resource.
+    - Report Info: Ronald Ross's appearance -> Goal: Humanize/Inform -> Viz/Presentation: Portrait Image (user-provided) -> Justification: Adds a personal and authentic element to the biographical section.
+    - Report Info: Ross's STS connections -> Goal: Analyze/Inform -> Viz/Presentation: Point-based grid layout -> Interaction: Reading -> Justification: Presents complex academic frameworks in a concise, digestible format as requested, ensuring the core educational content is clear and scannable.
     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -104,14 +100,6 @@
         .modal-content {
             transition: transform 0.3s ease-in-out;
         }
-        .source-link {
-            color: #B98B73;
-            text-decoration: none;
-            word-break: break-all;
-        }
-        .source-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -127,7 +115,7 @@
                         <a href="#context" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Science & Empire</a>
                         <a href="#impact" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Societal Impact</a>
                         <a href="#vision" class="nav-link px-3 py-2 rounded-md text-sm font-medium">His Vision</a>
-                        <a href="#sts" class="nav-link px-3 py-2 rounded-md text-sm font-medium">STS Connections</a>
+                        <a href="#sts" class="nav-link px-3 py-2 rounded-md text-sm font-medium">STS Frameworks</a>
                         <a href="#ask" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Ask Ross</a>
                         <a href="#bookshelf" class="nav-link px-3 py-2 rounded-md text-sm font-medium">The Bookshelf</a>
                     </div>
@@ -138,7 +126,7 @@
                         <option value="#context">Science & Empire</option>
                         <option value="#impact">Societal Impact</option>
                         <option value="#vision">His Vision</option>
-                        <option value="#sts">STS Connections</option>
+                        <option value="#sts">STS Frameworks</option>
                         <option value="#ask">Ask Ross</option>
                         <option value="#bookshelf">The Bookshelf</option>
                     </select>
@@ -152,7 +140,7 @@
             <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">A Pioneer of Modern Medicine</h2>
             <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Sir Ronald Ross was a British polymath—doctor, mathematician, writer, and artist—whose relentless research fundamentally changed our understanding of infectious disease. His Nobel Prize-winning discovery of the malaria parasite's life cycle in mosquitoes paved the way for effective control strategies, saving countless lives.</p>
             
-            <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="md:w-2/5">
                     <div class="relative pl-10 border-l-2 border-dashed border-[#E6D9CF]">
                         <div id="timeline-item-1895" class="timeline-item relative mb-8 pl-8 cursor-pointer" onclick="updateTimelineInfo('1895')">
@@ -173,7 +161,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-md">
+                <div class="md:w-3/5 bg-white rounded-lg p-8 shadow-md text-center md:text-left">
+                    <img src="ronald-image.jpg" alt="Portrait of Sir Ronald Ross" class="w-32 h-32 rounded-full mx-auto md:mx-0 md:float-left md:mr-6 mb-4 object-cover ring-4 ring-gray-200">
                     <h3 id="timeline-title" class="text-xl font-bold mb-4 text-[#B98B73]">The Discovery of a Lifetime</h3>
                     <p id="timeline-text" class="text-gray-700">Click on a date in the timeline to explore the key moments of Ross's groundbreaking research. Each step, filled with challenges and breakthroughs, illustrates the rigorous process of scientific discovery and its profound human consequences.</p>
                 </div>
@@ -225,19 +214,33 @@
             </div>
         </section>
 
-        <!-- NEW STS SECTION -->
         <section id="sts" class="mb-20 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">A Lens on Science, Technology & Society (STS)</h2>
-            <p class="text-center max-w-3xl mx-auto mb-8 text-lg">Ronald Ross's work is a classic case study for understanding how science, technology, and society are deeply interconnected. His discoveries were not made in a vacuum; they were shaped by and, in turn, reshaped the social, political, and technological landscape of his time. Click the button below for an AI-generated analysis of Ross's career through key STS frameworks, complete with verifiable sources.</p>
-            <div class="max-w-4xl mx-auto text-center mb-8">
-                <button id="generate-sts-btn" class="gemini-btn px-8 py-3 rounded-lg font-semibold text-lg transition-transform transform hover:scale-105">Generate STS Analysis</button>
-            </div>
-            <div id="sts-analysis-container" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md hidden">
-                <div id="sts-content">
-                    <!-- Dynamic content will be injected here -->
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#B98B73]">How to Frame Ronald Ross in STS Terms</h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Science, Technology, and Society (STS) provides powerful frameworks to understand that scientific breakthroughs are never isolated events. They are deeply embedded in the culture, politics, and technology of their time. Here’s how we can analyze Ross’s work through an STS lens.</p>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">1. Whig History vs. Real History</h3>
+                    <p class="text-sm">Ross is often seen as a lone “hero scientist.” STS warns this is a <strong class="font-semibold">Whig history</strong> trap—a simplified story of progress. The real history includes chance, the vital work of his Indian assistants, and the wider network that made his discovery possible.</p>
                 </div>
-                <div id="sts-sources" class="mt-8 pt-6 border-t border-gray-200">
-                    <!-- Sources will be injected here -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">2. Kuhn's Paradigm Shift</h3>
+                    <p class="text-sm">Before Ross, the dominant paradigm was the <strong class="font-semibold">“miasma theory”</strong> (disease from “bad air”). His mosquito-malaria link was a revolutionary <strong class="font-semibold">paradigm shift</strong>. As Thomas Kuhn described, anomalies (evidence against miasma) led to a crisis, which was resolved by a new paradigm: vector-borne disease theory.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">3. Boundary Objects & Trading Zones</h3>
+                    <p class="text-sm">The mosquito itself was a <strong class="font-semibold">boundary object</strong>. To Ross, it was a scientific specimen. To his assistants, a research tool. To Indian locals, a daily pest. These groups worked together in a <strong class="font-semibold">"trading zone"</strong> (the lab, the hospital), exchanging knowledge despite different perspectives.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">4. Technoscience & SCOT</h3>
+                    <p class="text-sm">Was it just science driving discovery? No. The microscope and lab methods were crucial. This is a core idea of <strong class="font-semibold">technoscience</strong>—that science and technology co-produce each other. From a SCOT view, technology (the microscope) shaped the scientific knowledge just as much as science shaped the tools.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">5. Interpretive Flexibility</h3>
+                    <p class="text-sm">The goal of malaria research had <strong class="font-semibold">interpretive flexibility</strong>; it meant different things to different groups. For the British Empire, it meant protecting soldiers and colonial stability. For the Indian population, it meant survival. Colonial medicine <strong class="font-semibold">configured the user</strong> by prioritizing the needs of the British first.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-[#B98B73]">6. Actor-Network Theory (ANT)</h3>
+                    <p class="text-sm">Ross was just one node in a vast network. <strong class="font-semibold">ANT</strong> reveals the other actors: his assistants, the mosquitoes, the malaria parasite, his microscope, Indian patients, and colonial hospitals. Discovery was a <strong class="font-semibold">networked achievement</strong>, not the work of one genius.</p>
                 </div>
             </div>
         </section>
@@ -309,7 +312,6 @@
                     </div>
                     <button class="summary-btn mt-4 gemini-btn text-sm font-semibold py-2 px-4 rounded-lg w-full transition-transform transform hover:scale-105">✨ Get AI Summary</button>
                 </div>
-                 <!-- NEW BOOK 1 -->
                 <div class="book-card flex flex-col justify-between bg-white rounded-lg shadow-md p-6" data-category="context" data-title="Public Health in British India" data-author="Mark Harrison">
                     <div>
                         <h3 class="font-bold text-lg text-[#B98B73]">Public Health in British India</h3>
@@ -318,7 +320,6 @@
                     </div>
                     <button class="summary-btn mt-4 gemini-btn text-sm font-semibold py-2 px-4 rounded-lg w-full transition-transform transform hover:scale-105">✨ Get AI Summary</button>
                 </div>
-                <!-- NEW BOOK 2 -->
                 <div class="book-card flex flex-col justify-between bg-white rounded-lg shadow-md p-6" data-category="impact" data-title="The Western Medical Tradition, 1800-2000" data-author="W.F. Bynum, et al.">
                     <div>
                         <h3 class="font-bold text-lg text-[#B98B73]">The Western Medical Tradition, 1800-2000</h3>
@@ -381,7 +382,6 @@
         }
 
         window.updateTimelineInfo = updateTimelineInfo;
-
         updateTimelineInfo('1897');
 
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -391,15 +391,9 @@
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
                 const filter = btn.dataset.filter;
-
                 bookCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                    card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'flex' : 'none';
                 });
             });
         });
@@ -420,39 +414,10 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y;
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Deaths per 100,000 Population'
-                        }
-                    },
-                    x: {
-                         title: {
-                            display: true,
-                            text: 'Years After Mosquito Control Implementation'
-                        }
-                    }
+                    y: { beginAtZero: true, title: { display: true, text: 'Deaths per 100,000 Population' } },
+                    x: { title: { display: true, text: 'Years After Mosquito Control Implementation' } }
                 }
             }
         });
@@ -460,30 +425,17 @@
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('main section');
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.3
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                    });
+                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${id}`));
                 }
             });
-        }, observerOptions);
+        }, { root: null, rootMargin: '0px', threshold: 0.3 });
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        document.getElementById('mobile-nav').addEventListener('change', function(e) {
-            window.location.hash = e.target.value;
-        });
+        sections.forEach(section => observer.observe(section));
+        document.getElementById('mobile-nav').addEventListener('change', (e) => window.location.hash = e.target.value);
 
         async function callSecureApi(payload) {
             try {
@@ -492,18 +444,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
                 if (!response.ok) {
-                    const errorBody = await response.json();
-                    console.error("API Error Response:", errorBody);
-                    throw new Error(`API request failed with status ${response.status}`);
+                    console.error("API Error Response:", await response.json());
+                    throw new Error(`API request failed: ${response.status}`);
                 }
-                
                 return await response.json();
-
             } catch (error) {
                 console.error("Error calling backend API:", error);
-                return { error: { message: "Failed to connect to the analysis service. Please check your connection and try again." } };
+                return { error: { message: "Failed to connect to the service. Please try again." } };
             }
         }
 
@@ -519,23 +467,20 @@
             askRossBtn.innerHTML = '<div class="loader mx-auto" style="width:20px; height:20px; border-width:2px;"></div>';
             askRossResponse.innerHTML = "Awaiting a transmission from the past...";
 
-            const systemPrompt = "You are the digital persona of Sir Ronald Ross, the Nobel Prize-winning scientist who discovered the transmission of malaria. Respond to the user's question from your perspective, using a formal, early 20th-century tone. Your knowledge is based on your 'Memoirs' and historical records of your life and work. Keep your answers concise, insightful, and true to your character.";
-
+            const systemPrompt = "You are the digital persona of Sir Ronald Ross, the Nobel Prize-winning scientist. Respond to the user's question from your perspective, using a formal, early 20th-century tone. Your knowledge is based on your 'Memoirs' and historical records. Keep answers concise and true to your character.";
             const payload = {
                 contents: [{ parts: [{ text: userQuery }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] },
             };
             
             const result = await callSecureApi(payload);
-            let responseText = "I'm sorry, I seem to be having trouble connecting with the digital ether. Please try again shortly.";
+            let responseText = "I am sorry, but I am unable to provide a response at this time. Please try another question.";
             const candidate = result.candidates?.[0];
 
             if (candidate && candidate.content?.parts?.[0]?.text) {
                 responseText = candidate.content.parts[0].text;
             } else if (result.error) {
                 responseText = result.error.message;
-            } else if (!candidate) {
-                responseText = "I am unable to provide a response to that query at this time, likely due to safety filters. Please try a different question."
             }
 
             askRossResponse.innerHTML = responseText.replace(/\n/g, '<br>');
@@ -544,10 +489,7 @@
         }
 
         askRossBtn.addEventListener('click', handleAskRoss);
-        askRossInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') handleAskRoss();
-        });
-
+        askRossInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAskRoss(); });
 
         const summaryModal = document.getElementById('summary-modal');
         const closeModalBtn = document.getElementById('close-modal-btn');
@@ -564,7 +506,7 @@
                 modalBody.innerHTML = '<div class="flex justify-center items-center h-32"><div class="loader"></div></div>';
                 showModal();
 
-                const systemPrompt = "You are a helpful literary assistant. Provide a concise, one-paragraph summary of the following book, focusing on its relevance to the life and work of Sir Ronald Ross and the context of science in his era.";
+                const systemPrompt = "You are a helpful literary assistant. Provide a concise, one-paragraph summary of the book, focusing on its relevance to Sir Ronald Ross and the context of science in his era.";
                 const userQuery = `Summarize the book: ${title} by ${author}.`;
                 
                 const payload = {
@@ -575,9 +517,8 @@
 
                 const result = await callSecureApi(payload);
                 let responseText = "Could not generate summary at this time.";
-                const candidate = result.candidates?.[0];
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                     responseText = candidate.content.parts[0].text;
+                if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                     responseText = result.candidates[0].content.parts[0].text;
                 }
                 modalBody.innerHTML = responseText.replace(/\n/g, '<br>');
             });
@@ -587,73 +528,13 @@
             summaryModal.classList.remove('opacity-0', 'pointer-events-none');
             summaryModal.querySelector('.modal-content').classList.remove('scale-95');
         }
-
         function hideModal() {
             summaryModal.classList.add('opacity-0', 'pointer-events-none');
             summaryModal.querySelector('.modal-content').classList.add('scale-95');
         }
 
         closeModalBtn.addEventListener('click', hideModal);
-        summaryModal.addEventListener('click', (e) => {
-            if (e.target === summaryModal) hideModal();
-        });
-
-        // NEW STS SECTION LOGIC
-        const generateStsBtn = document.getElementById('generate-sts-btn');
-        const stsContainer = document.getElementById('sts-analysis-container');
-        const stsContent = document.getElementById('sts-content');
-        const stsSources = document.getElementById('sts-sources');
-
-        generateStsBtn.addEventListener('click', async () => {
-            generateStsBtn.disabled = true;
-            generateStsBtn.innerHTML = '<div class="loader mx-auto" style="width:24px; height:24px; border-width:3px;"></div> Generating...';
-            
-            stsContainer.classList.remove('hidden');
-            stsContent.innerHTML = '<div class="flex justify-center items-center h-48"><div class="loader"></div></div>';
-            stsSources.innerHTML = '';
-
-            const systemPrompt = "You are an academic expert in Science, Technology, and Society (STS). Your task is to analyze the work of Sir Ronald Ross through key STS concepts. For each concept, provide a concise explanation and a specific example from Ross's career. Your analysis must be grounded in historical facts. Format the output with markdown-style headings for each concept (e.g., '### Thomas Kuhn and Paradigm Shifts').";
-            const userQuery = "Analyze Ronald Ross's work through the lens of the following STS concepts: 1. Thomas Kuhn's Paradigm Shifts, 2. The Social Construction of Technology (SCOT), 3. Actor-Network Theory (ANT), and 4. The Political Economy of Science. For each point, provide a brief explanation and connect it directly to Ross's discovery of malaria transmission, his work in British India, and his advocacy for public health.";
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-
-            const result = await callSecureApi(payload);
-            const candidate = result.candidates?.[0];
-            
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                let htmlContent = candidate.content.parts[0].text;
-                // Simple markdown to HTML conversion
-                htmlContent = htmlContent.replace(/### (.*)/g, '<h3 class="text-xl font-semibold mb-2 text-[#B98B73]">$1</h3>');
-                htmlContent = htmlContent.replace(/\n/g, '<br>');
-                stsContent.innerHTML = htmlContent;
-
-                const groundingMetadata = candidate.groundingMetadata;
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    const sources = groundingMetadata.groundingAttributions
-                        .map(attr => ({ uri: attr.web?.uri, title: attr.web?.title }))
-                        .filter(source => source.uri && source.title);
-
-                    if (sources.length > 0) {
-                        let sourcesHtml = '<h4 class="text-lg font-semibold mb-3">Sources Fetched for this Analysis:</h4><ul class="list-disc list-inside space-y-2">';
-                        sources.forEach(source => {
-                            sourcesHtml += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="source-link">${source.title}</a></li>`;
-                        });
-                        sourcesHtml += '</ul>';
-                        stsSources.innerHTML = sourcesHtml;
-                    }
-                }
-            } else {
-                stsContent.innerHTML = '<p class="text-red-600">Failed to generate the STS analysis. The service may be unavailable or the request may have been blocked. Please try again later.</p>';
-            }
-
-            generateStsBtn.disabled = false;
-            generateStsBtn.textContent = 'Re-generate STS Analysis';
-        });
-
+        summaryModal.addEventListener('click', (e) => { if (e.target === summaryModal) hideModal(); });
     });
 </script>
 </body>
